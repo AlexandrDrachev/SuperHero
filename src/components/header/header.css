@@ -1,0 +1,64 @@
+
+.header {
+    border-bottom: 1px solid lightgray;
+    width: 100%;
+    height: 160px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.random-hero {
+    padding-right: 15px;
+    min-width: 500px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    border-radius: 10px;
+}
+
+.random-hero-info {
+    width: 350px;
+}
+
+.img-random-hero {
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    height: 115px;
+    width: 100px;
+    margin: 3px 20px;
+}
+
+.random-hero h2{
+    font-weight: bold;
+    color: #17a2b8;
+    margin-right: 20px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+.slides-added {
+    display: flex;
+    flex-direction: column;
+}
+
+.play-span {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
