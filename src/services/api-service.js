@@ -110,7 +110,7 @@ export const arrHero = [
 
 export default class ServiceApi {
 
-  baseUrl = 'https://cors-anywhere.herokuapp.com/https://superheroapi.com/api/665796377279843';
+  baseUrl = 'https://superheroapi.com/api/490847258166664';
 
   getUrl = (url) => fetch(`${url}`);
 

@@ -18,7 +18,8 @@ export const initialState =
     arrTableHeroes: [],
     objHero: {},
     countAddedHero: 0,
-    objTableCartHero: {}
+    objTableCartHero: {},
+    error: false
   };
 
 const reducer = (state = initialState, action) => {
@@ -65,7 +66,6 @@ const reducer = (state = initialState, action) => {
       };
 
     case 'ON_TOGGLE_ID_HERO':
-      console.log(state.idHero);
       return {
         ...state,
         idHero: action.payload
@@ -77,21 +77,47 @@ const reducer = (state = initialState, action) => {
         randomShow: !state.randomShow
       };
 
-    case 'ON_UPDATE_OBJECT_ADDED_HEROES':
+    case 'ON_UPDATE_ARRAY_ADDED_HEROES':
+
+      const indexHero = state.arrTableHeroes.findIndex(({id}) => id === action.payload);
+      if (indexHero === -1) {
+        return {
+          ...state,
+          arrTableHeroes: [
+            ...state.arrTableHeroes,
+            state.objTableCartHero
+          ],
+          countAddedHero: state.countAddedHero + 1
+        };
+      }
+
+      return {...state};
+
+    case 'ON_HERO_CART_REMOVED':
       return {
         ...state,
         arrTableHeroes: [
-          ...state.arrTableHeroes,
-          state.objTableCartHero
-        ]
+          ...state.arrTableHeroes.filter(({id}) => id !== action.payload.id)
+        ],
+        countAddedHero: state.countAddedHero - 1
+      };
+
+    case 'WARNING_ERROR':
+      return {
+        ...state,
+        error: true
+      };
+
+    case 'RETURN_NEW_ID':
+      return {
+        ...state,
+        idHero: 460
       };
 
     default:
       return state;
   }
 };
-
-const updateArrHero = () => {};
 
 export default reducer;
 

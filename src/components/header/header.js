@@ -11,7 +11,7 @@ import PlayPaused from "../play-paused";
 const Header = () => {
 
   const [ initialState, dispatch ] = useStateValue();
-  const { count, randomId, randomIdHero, randomImgHero, randomNameHero, randomShow } = initialState;
+  const { count, randomId, randomIdHero, randomImgHero, randomNameHero, randomShow, countAddedHero } = initialState;
 
   useEffect(() => {
 
@@ -64,7 +64,7 @@ const Header = () => {
           </div>
         </div>
         <div className="slides-added">
-          <Link to="/details"><span>Added Heroes</span></Link>
+          <Link to="/details"><span>Added Heroes: {countAddedHero}</span></Link>
         </div>
       </div>
     </div>

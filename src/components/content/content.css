@@ -44,7 +44,7 @@
     border-bottom: 1px solid lightgray;
     border-right: 1px solid lightgray;
     border-radius: 25px;
-    margin: 0 30px;
+    margin: 0 30px 25px;
     width: 400px;
     padding: 15px;
     display: flex;
@@ -58,5 +58,5 @@
 }
 
 .btn-head-hero {
-    margin-top: 36px;
+    margin-top: 20px;
 }

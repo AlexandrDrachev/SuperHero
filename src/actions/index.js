@@ -46,8 +46,36 @@ export const onToggleRandomShow = () => {
   };
 };
 
-export const onUpdateObjectAddedHeroes = () => {
+export const onUpdateArrayAddedHeroes = (id) => {
   return {
-    type: 'ON_UPDATE_OBJECT_ADDED_HEROES'
+    type: 'ON_UPDATE_ARRAY_ADDED_HEROES',
+    payload: id
+  };
+};
+
+export const onAddedHeroCart = (arrHero, funcCartRemoved) => {
+  return {
+    type: 'ON_ADDED_HERO_CART',
+    payload: arrHero,
+    func: funcCartRemoved
+  };
+};
+
+export const onHeroCartRemoved = (objHero) => {
+  return {
+    type: 'ON_HERO_CART_REMOVED',
+    payload: objHero
+  };
+};
+
+export const warningError = () => {
+  return {
+    type: 'WARNING_ERROR'
+  };
+};
+
+export const returnNewId = () => {
+  return {
+    type: 'RETURN_NEW_ID'
   };
 };
