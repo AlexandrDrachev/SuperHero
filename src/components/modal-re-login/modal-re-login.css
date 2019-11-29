@@ -1,0 +1,26 @@
+
+.modal-re-login {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 25px;
+    background: white;
+    opacity: 0.9;
+    height: 135px;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-autorisation {
+    width: 125px;
+    margin: 10px;
+}
+
+.btn-autorisation-group {
+    display: flex;
+    justify-content: space-evenly;
+}

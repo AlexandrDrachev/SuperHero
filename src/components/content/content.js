@@ -28,8 +28,8 @@ const Content = () => {
         dispatch(heroError(error));
       }
     };
-
     fetchData(idHero);
+
   }, [idHero, dispatch, newId]);
 
   if (!imgHero) {

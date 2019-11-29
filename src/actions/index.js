@@ -79,3 +79,41 @@ export const returnNewId = () => {
     type: 'RETURN_NEW_ID'
   };
 };
+
+export const addedUsersInState = (arrNewUsers) => {
+  return {
+    type: 'ADDED_USERS_IN_STATE',
+    payload: arrNewUsers
+  };
+};
+
+export const getWindowApp = (returnElement, dataStorage) => {
+  return {
+    type: 'GET_WINDOW_APP',
+    payload: returnElement,
+    dataUsers: dataStorage
+  };
+};
+
+export const getWindowModal = (returnElement) => {
+  return {
+    type: 'GET_WINDOW_MODAL',
+    payload: returnElement
+  };
+};
+
+export const onGetUserAutorisation = (checkUserObj) => {
+  return {
+    type: 'ON_GET_USER_AUTORISATION',
+    payload: checkUserObj
+  };
+};
+
+export const getAdminPage = (returnElement, userObj) => {
+  return {
+    type: 'GET_ADMIN_PAGE',
+    payload: returnElement,
+    user: userObj
+  };
+};
+

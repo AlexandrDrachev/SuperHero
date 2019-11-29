@@ -1,4 +1,5 @@
 
+export let usersData = [{name: 'Admin', password: 123456, email: 'alexfront.front@gmail.com'}];
 
 export const initialState =
   {
@@ -19,7 +20,16 @@ export const initialState =
     objHero: {},
     countAddedHero: 0,
     objTableCartHero: {},
-    error: false
+    error: false,
+    users: [],
+    autorisation: false,
+    registration: false,
+    administrator: false,
+    userLogin: false,
+    window: null,
+    userAutorisation: {},
+    adminPage: null,
+    isAdministrator: false
   };
 
 const reducer = (state = initialState, action) => {
@@ -31,10 +41,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         count: state.count + 1
       };
-
     case 'FETCH_HERO_REQUEST':
       return state;
-
     case 'FETCH_HERO_SUCCESS':
       const { id, image, name, appearance, biography } = action.payload;
       return {
@@ -53,7 +61,6 @@ const reducer = (state = initialState, action) => {
           publisher: biography.publisher
         },
       };
-
     case 'FETCH_RANDOM_HERO_SUCCESS':
       const { randomId, randomPayload } = action;
       return {
@@ -64,19 +71,16 @@ const reducer = (state = initialState, action) => {
         randomId: randomId,
         count: state.count + 1
       };
-
     case 'ON_TOGGLE_ID_HERO':
       return {
         ...state,
         idHero: action.payload
       };
-
     case 'ON_TOGGLE_RANDOM_SHOW':
       return {
         ...state,
         randomShow: !state.randomShow
       };
-
     case 'ON_UPDATE_ARRAY_ADDED_HEROES':
 
       const indexHero = state.arrTableHeroes.findIndex(({id}) => id === action.payload);
@@ -92,7 +96,6 @@ const reducer = (state = initialState, action) => {
       }
 
       return {...state};
-
     case 'ON_HERO_CART_REMOVED':
       return {
         ...state,
@@ -101,17 +104,48 @@ const reducer = (state = initialState, action) => {
         ],
         countAddedHero: state.countAddedHero - 1
       };
-
     case 'WARNING_ERROR':
       return {
         ...state,
         error: true
       };
-
     case 'RETURN_NEW_ID':
       return {
         ...state,
         idHero: 460
+      };
+    case 'ADDED_USERS_IN_STATE':
+      return {
+        ...state,
+        users: action.payload
+      };
+
+    case 'GET_WINDOW_APP':
+      return {
+        ...state,
+        window: action.payload,
+        users: action.dataUsers
+      };
+
+    case 'GET_WINDOW_MODAL':
+      return {
+        ...state,
+        window: action.payload
+      };
+
+    case 'ON_GET_USER_AUTORISATION':
+      return {
+        ...state,
+        userAutorisation: action.payload,
+        autorisation: true
+      };
+
+    case 'GET_ADMIN_PAGE':
+      return {
+        ...state,
+        adminPage: action.payload,
+        userAutorisation: action.user,
+        isAdministrator: true
       };
 
     default:

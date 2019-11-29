@@ -1,0 +1,10 @@
+
+.autorisation {
+    display: flex;
+    justify-content: space-around;
+    width: 350px;
+    border-top: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-radius: 15px;
+    padding: 10px;
+}
