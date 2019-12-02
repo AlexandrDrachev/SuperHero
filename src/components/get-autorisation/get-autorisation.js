@@ -1,80 +1,37 @@
-import React, { Fragment, useEffect } from 'react';
+import React from 'react';
 
 import './get-autorisation.css';
-import { onGetUserAutorisation, getWindowModal, getAdminPage } from "../../actions";
+import { onGetUserAutorisation, getWindowModal, getAdminPage, onToggleUserLogin, getWindowModalRegistration } from "../../actions";
 import {useStateValue} from "../../state";
-import Autorisation from "../autorisation";
-import Header from "../header";
-import {Route, Switch} from "react-router";
-import HomePage from "../home-page";
-import HeroDetails from "../hero-details";
-import GetRegistration from "../get-registration";
-import GetAdministration from "../get-administartion";
-import ModalReLogin from "../modal-re-login";
-import {Link} from "react-router-dom";
-
-const notAutorisation = (
-  <Fragment>
-    <div className="app">
-      <div className="login">
-        <span className="span-login">quest</span>
-      </div>
-      <Header />
-      <Switch>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/details" component={HeroDetails} />
-        <Route path="/registration" component={GetRegistration} />
-        <Route path="/administration" component={GetAdministration} />
-      </Switch>
-    </div>
-    <ModalReLogin/>
-  </Fragment>
-);
+import {notAutorisation, isRegistration} from "../app/app";
 
 const GetAutorisation = () => {
 
   const [ initialState, dispatch ] = useStateValue();
-  const { autorisation, userAutorisation, users, isAdministrator } = initialState;
-  // console.log(users, autorisation);
+  const { users, userAutorisation } = initialState;
 
   let checkUserAutorisation = {
     name: '',
     password: ''
   };
 
-  const isAdmin = (
-    <Fragment>
-      <div className="app">
-        <div className="login">
-          <Autorisation/>
-          <h3 className="span-login">{userAutorisation.name}</h3>
-          <span className="span-exit">Exit</span>
-        </div>
-        <Header/>
-        <Switch>
-          <Route path="/" exact component={HomePage}/>
-          <Route path="/details" component={HeroDetails}/>
-          <Route path="/autorisation" component={GetAutorisation}/>
-          <Route path="/registration" component={GetRegistration}/>
-          <Route path="/administration" component={GetAdministration}/>
-        </Switch>
-      </div>
-    </Fragment>
-  );
-
-  const onCheckAutorisation = (arrData, checkObj, returnElement, returnAdminElement) => {
+  const onCheckAutorisation = (arrData, checkObj, returnElement) => {
     const check = arrData.some((user) => {
-      console.log('state:', user.name);
       return user.name.toString() === checkObj.name.toString() &&
+        checkObj.name.toString() !== '' &&
         user.password.toString() === checkObj.password.toString() &&
+        checkObj.password.toString() !== '' &&
         checkObj.name.toString() !== 'Admin';
     });
 
     if (check) {
       return dispatch(onGetUserAutorisation(checkObj));
     }
-    if (checkObj.name.toString() === 'Admin' && checkObj.password === 123456) {
-      return dispatch(getAdminPage(returnAdminElement, checkObj));
+    if (!check && checkObj.name.toString() !== 'Admin') {
+      return dispatch(onToggleUserLogin());
+    }
+    if (checkObj.name.toString() === 'Admin' && checkObj.password.toString() === '123456') {
+      return dispatch(getAdminPage(checkObj));
     }
     return dispatch(getWindowModal(returnElement));
 
@@ -94,11 +51,11 @@ const GetAutorisation = () => {
       </form>
       <div className="btn-autorisation-group">
         <button
-          onClick={() => onCheckAutorisation(users, checkUserAutorisation, notAutorisation, isAdmin)}
+          onClick={() => onCheckAutorisation(users, checkUserAutorisation, notAutorisation(userAutorisation))}
           className="btn btn-info btn-autorisation">Let's go!</button>
-        <Link to="/registration"><button
-          onClick={() => {}}
-          className="btn btn-info btn-autorisation">registration</button></Link>
+        <button
+          onClick={() => dispatch(getWindowModalRegistration(isRegistration(userAutorisation)))}
+          className="btn btn-info btn-autorisation">registration</button>
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 
 export let usersData = [{name: 'Admin', password: 123456, email: 'alexfront.front@gmail.com'}];
+// const dataStorage = JSON.stringify(usersData);
+// localStorage.setItem("dataStorage", dataStorage);
 
 export const initialState =
   {
@@ -28,8 +30,8 @@ export const initialState =
     userLogin: false,
     window: null,
     userAutorisation: {},
-    adminPage: null,
-    isAdministrator: false
+    isAdministrator: false,
+    userRegistration: false
   };
 
 const reducer = (state = initialState, action) => {
@@ -119,33 +121,77 @@ const reducer = (state = initialState, action) => {
         ...state,
         users: action.payload
       };
-
     case 'GET_WINDOW_APP':
       return {
         ...state,
         window: action.payload,
-        users: action.dataUsers
+        users: action.dataUsers,
+        userRegistration: false
       };
-
     case 'GET_WINDOW_MODAL':
       return {
         ...state,
-        window: action.payload
+        window: action.payload,
+        registration: false
       };
-
+    case 'GET_NEW_WINDOW_MODAL':
+      return {
+        ...state,
+        window: action.payload,
+        registration: false,
+        userLogin: false
+      };
     case 'ON_GET_USER_AUTORISATION':
       return {
         ...state,
         userAutorisation: action.payload,
-        autorisation: true
+        autorisation: true,
+        registration: false
       };
-
     case 'GET_ADMIN_PAGE':
       return {
         ...state,
-        adminPage: action.payload,
         userAutorisation: action.user,
-        isAdministrator: true
+        isAdministrator: true,
+        userLogin: false
+      };
+    case 'ON_GET_REGISTRATION':
+      return {
+        ...state,
+        registration: true,
+        autorisation: false
+      };
+    case 'GET_WINDOW_MODAL_REGISTRATION':
+      return {
+        ...state,
+        window: action.payload,
+        registration: true,
+        autorisation: false,
+        isAdministrator: false,
+        userLogin: false
+      };
+    case 'GET_WINDOW_RE_MODAL':
+      return {
+        ...state,
+        window: action.payload
+      };
+    case 'ON_TOGGLE_USERLOGIN':
+      return {
+        ...state,
+        userLogin: true
+      };
+    case 'ON_USER_EXIT':
+      return {
+        ...state,
+        isAdministrator: false,
+        autorisation: false
+      };
+    case 'ON_REGISTRATION_NEW_USER':
+      return {
+        ...state,
+        autorisation: true,
+        registration: false,
+        userRegistration: true
       };
 
     default:

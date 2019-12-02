@@ -102,6 +102,13 @@ export const getWindowModal = (returnElement) => {
   };
 };
 
+export const getNewWindowModal = (returnElement) => {
+  return {
+    type: 'GET_NEW_WINDOW_MODAL',
+    payload: returnElement
+  };
+};
+
 export const onGetUserAutorisation = (checkUserObj) => {
   return {
     type: 'ON_GET_USER_AUTORISATION',
@@ -109,11 +116,49 @@ export const onGetUserAutorisation = (checkUserObj) => {
   };
 };
 
-export const getAdminPage = (returnElement, userObj) => {
+export const getAdminPage = (userObj) => {
   return {
     type: 'GET_ADMIN_PAGE',
-    payload: returnElement,
     user: userObj
   };
 };
+
+export const onGetRegistration = () => {
+  return {
+    type: 'ON_GET_REGISTRATION'
+  };
+};
+
+export const getWindowModalRegistration = (returnElement) => {
+  return {
+    type: 'GET_WINDOW_MODAL_REGISTRATION',
+    payload: returnElement
+  };
+};
+
+export const onToggleUserLogin = () => {
+  return {
+    type: 'ON_TOGGLE_USERLOGIN'
+  };
+};
+
+export const getWindowReModal = (returnElement) => {
+  return {
+    type: 'GET_WINDOW_RE_MODAL',
+    payload: returnElement
+  };
+};
+
+export const onUserExit = () => {
+  return {
+    type: 'ON_USER_EXIT'
+  };
+};
+
+export const onRegistrationNewUser = () => {
+  return {
+    type: 'ON_REGISTRATION_NEW_USER'
+  };
+};
+
 
