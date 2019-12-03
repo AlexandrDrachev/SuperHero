@@ -3,15 +3,16 @@ import React from 'react';
 import './get-registration.css';
 import {useStateValue} from "../../state";
 import {addedUsersInState, getWindowModal, onGetUserAutorisation, onRegistrationNewUser} from '../../actions';
-import {notAutorisation} from "../app/app";
+import {modalComponent} from "../app/app";
+import ModalLogin from "../modal-login";
 
 const GetRegistration = () => {
 
   const [ initialState, dispatch ] = useStateValue();
-  const { users, userAutorisation } = initialState;
+  const { users } = initialState;
 
   let newUsers = users;
-  let newUser = {};
+  let newUser = { statusAdmin: false, userDisable: false };
   let inputDubblePass = '';
 
   const onCreateNewUser = (arrData, obj, inpDubblePass) => {
@@ -61,7 +62,7 @@ const GetRegistration = () => {
       </div>
       <div className="btn-autorisation-group">
         <button
-          onClick={() => dispatch(getWindowModal(notAutorisation(userAutorisation)))}
+          onClick={() => dispatch(getWindowModal(modalComponent(ModalLogin)))}
           className="btn btn-info btn-registration"
         >autorisation</button>
         <button

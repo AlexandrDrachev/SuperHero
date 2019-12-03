@@ -8,58 +8,21 @@ import HomePage from "../home-page/home-page";
 import { useStateValue } from "../../state";
 import Autorisation from "../administration";
 import ModalLogin from "../modal-login";
-import {addedUsersInState, getWindowApp, getWindowModal,
-  getWindowModalRegistration, getWindowReModal, onUserExit} from '../../actions';
+import { addedUsersInState, getWindowApp, getWindowModal,
+        getWindowModalRegistration, getWindowReModal, onUserExit } from '../../actions';
 import ModalRegistration from "../modal-registration";
 import GetAdministration from "../get-administartion";
 import ModalReLogin from "../modal-re-login";
 
-export const notAutorisation = () => {
+export const isAutorisation = (userObject, dispatch, action, adminPage) => {
   return (
     <Fragment>
       <div className="app">
         <div className="login">
-          <span
-            className="span-exit">Exit</span>
-        </div>
-        <Header />
-        <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/details" component={HeroDetails} />
-        </Switch>
-      </div>
-      <ModalLogin/>
-    </Fragment>
-  );
-};
-export const isAutorisation = (userObject, dispatch, action) => {
-  return (
-    <Fragment>
-      <div className="app">
-        <div className="login">
+          {adminPage}
           <h3 className="span-login">{userObject.name}</h3>
           <span
             onClick={() => dispatch(action())}
-            className="span-exit">Exit</span>
-        </div>
-        <Header/>
-        <Switch>
-          <Route path="/" exact component={HomePage}/>
-          <Route path="/details" component={HeroDetails}/>
-        </Switch>
-      </div>
-    </Fragment>
-  );
-};
-export const isAdminPage = (userObject, func, action) => {
-  return (
-    <Fragment>
-      <div className="app">
-        <div className="login">
-          <Autorisation />
-          <h3 className="span-login">{userObject.name}</h3>
-          <span
-            onClick={() => func(action())}
             className="span-exit">Exit</span>
         </div>
         <Header/>
@@ -72,24 +35,7 @@ export const isAdminPage = (userObject, func, action) => {
     </Fragment>
   );
 };
-export const isRegistration = () => {
-  return (
-    <Fragment>
-      <div className="app">
-        <div className="login">
-          <span className="span-exit">Exit</span>
-        </div>
-        <Header />
-        <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/details" component={HeroDetails} />
-        </Switch>
-      </div>
-      <ModalRegistration/>
-    </Fragment>
-  );
-};
-export const isReAutorisation = () => {
+export const modalComponent = (Name) => {
   return (
     <Fragment>
       <div className="app">
@@ -103,40 +49,41 @@ export const isReAutorisation = () => {
           <Route path="/details" component={HeroDetails} />
         </Switch>
       </div>
-      <ModalReLogin/>
+      <Name/>
     </Fragment>
   );
 };
 
-const getLocalStorage = JSON.parse(localStorage.getItem("dataStorage"));
+let getLocalStorage = JSON.parse(localStorage.getItem("dataStorage"));
 
 const App = () => {
 
   const [ initialState, dispatch ] = useStateValue();
   const { autorisation, window, users, userAutorisation, isAdministrator,
-    registration, userLogin, userRegistration } = initialState;
-
+          registration, userLogin, userRegistration } = initialState;
 
   useEffect(() => {
 
     dispatch(addedUsersInState(getLocalStorage));
+    console.log(users);
+
     if (autorisation && !userRegistration) {
-      dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit), getLocalStorage));
+      dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit), users));
     }
     if (!autorisation && !isAdministrator && !registration) {
-      dispatch(getWindowModal(notAutorisation(userAutorisation)));
+      dispatch(getWindowModal(modalComponent(ModalLogin)));
     }
     if (!autorisation && !registration && isAdministrator) {
-      dispatch(getWindowApp(isAdminPage(userAutorisation, dispatch, onUserExit), getLocalStorage));
+      dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit, <Autorisation/>), users));
     }
     if (registration && !autorisation && !isAdministrator) {
-      dispatch(getWindowModalRegistration(isRegistration(userAutorisation)))
+      dispatch(getWindowModalRegistration(modalComponent(ModalRegistration)))
     }
     if (userLogin) {
-      dispatch(getWindowReModal(isReAutorisation(userAutorisation)));
+      dispatch(getWindowReModal(modalComponent(ModalReLogin)));
     }
     if (userRegistration && autorisation) {
-      dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit), getLocalStorage))
+      dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit, null), users))
     }
   }, [autorisation, users, isAdministrator, userAutorisation,
     registration, userLogin, dispatch, userRegistration]);

@@ -3,12 +3,13 @@ import React from 'react';
 import './modal-re-login.css';
 import {getNewWindowModal, getWindowModalRegistration} from '../../actions';
 import {useStateValue} from "../../state";
-import {isRegistration, notAutorisation} from "../app/app";
+import {modalComponent} from "../app/app";
+import ModalLogin from "../modal-login";
+import ModalRegistration from "../modal-registration";
 
 const ModalReLogin = () => {
 
-  const [ initialState, dispatch ] = useStateValue();
-  const { userAutorisation } = initialState;
+  const [ , dispatch ] = useStateValue();
 
   return (
     <div className="modal-backdrop">
@@ -16,10 +17,10 @@ const ModalReLogin = () => {
         <h3>Error!</h3>
         <div className="btn-autorisation-group">
           <button
-            onClick={() => dispatch(getNewWindowModal(notAutorisation(userAutorisation)))}
+            onClick={() => dispatch(getNewWindowModal(modalComponent(ModalLogin)))}
             className="btn btn-info btn-autorisation">autorisation</button>
           <button
-            onClick={() => dispatch(getWindowModalRegistration(isRegistration(userAutorisation)))}
+            onClick={() => dispatch(getWindowModalRegistration(modalComponent(ModalRegistration)))}
             className="btn btn-info btn-autorisation">registration</button>
         </div>
       </div>

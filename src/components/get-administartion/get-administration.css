@@ -4,3 +4,12 @@
     font-size: 16px;
     margin: 3px;
 }
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 10px;
+}

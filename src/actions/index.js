@@ -161,4 +161,10 @@ export const onRegistrationNewUser = () => {
   };
 };
 
+export const getUserInAdminSelect = (userObj) => {
+  return {
+    type: 'GET_USER_IN_ADMIN_SELECT',
+    payload: userObj
+  };
+};
 

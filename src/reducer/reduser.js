@@ -1,5 +1,5 @@
 
-export let usersData = [{name: 'Admin', password: 123456, email: 'alexfront.front@gmail.com'}];
+export let usersData = [{statusAdmin: true, name: 'Admin', password: 123456, email: 'alexfront.front@gmail.com'}];
 // const dataStorage = JSON.stringify(usersData);
 // localStorage.setItem("dataStorage", dataStorage);
 
@@ -31,7 +31,8 @@ export const initialState =
     window: null,
     userAutorisation: {},
     isAdministrator: false,
-    userRegistration: false
+    userRegistration: false,
+    userInAdminSelect: {}
   };
 
 const reducer = (state = initialState, action) => {
@@ -192,6 +193,11 @@ const reducer = (state = initialState, action) => {
         autorisation: true,
         registration: false,
         userRegistration: true
+      };
+    case 'GET_USER_IN_ADMIN_SELECT':
+      return {
+        ...state,
+        userInAdminSelect: action.payload
       };
 
     default:

@@ -1,14 +1,17 @@
 import React from 'react';
 
 import './get-autorisation.css';
-import { onGetUserAutorisation, getWindowModal, getAdminPage, onToggleUserLogin, getWindowModalRegistration } from "../../actions";
+import { onGetUserAutorisation, getWindowModal,
+         getAdminPage, onToggleUserLogin, getWindowModalRegistration } from "../../actions";
 import {useStateValue} from "../../state";
-import {notAutorisation, isRegistration} from "../app/app";
+import { modalComponent} from "../app/app";
+import ModalLogin from "../modal-login";
+import ModalRegistration from "../modal-registration";
 
 const GetAutorisation = () => {
 
   const [ initialState, dispatch ] = useStateValue();
-  const { users, userAutorisation } = initialState;
+  const { users } = initialState;
 
   let checkUserAutorisation = {
     name: '',
@@ -51,10 +54,10 @@ const GetAutorisation = () => {
       </form>
       <div className="btn-autorisation-group">
         <button
-          onClick={() => onCheckAutorisation(users, checkUserAutorisation, notAutorisation(userAutorisation))}
+          onClick={() => onCheckAutorisation(users, checkUserAutorisation, modalComponent(ModalLogin))}
           className="btn btn-info btn-autorisation">Let's go!</button>
         <button
-          onClick={() => dispatch(getWindowModalRegistration(isRegistration(userAutorisation)))}
+          onClick={() => dispatch(getWindowModalRegistration(modalComponent(ModalRegistration)))}
           className="btn btn-info btn-autorisation">registration</button>
       </div>
     </div>
