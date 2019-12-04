@@ -2,23 +2,16 @@ import React, {Fragment, useEffect} from 'react';
 
 import './get-administration.css';
 import {useStateValue} from "../../state";
-import {addedUsersInState, getUserInAdminSelect} from '../../actions';
+import {addedUsersInState, getUserInAdminSelect, onChangeUserDisable, onChangeUserStatusAdmin} from '../../actions';
 
 const GetAdministration = () => {
 
   const [ initialState, dispatch ] = useStateValue();
   const { users, userInAdminSelect } = initialState;
 
-  let userKey = '';
-  let newUsers = users;
-
   useEffect(() => {
-
-    dispatch(addedUsersInState(newUsers));
-    console.log('dispatch isAdmin:', users);
-    console.log('userInAdminSelect:', userInAdminSelect.name);
-
-  }, [users, dispatch, userInAdminSelect.name]);
+    dispatch(addedUsersInState(users));
+  }, [users, dispatch, userInAdminSelect]);
 
   const usersList = users.map((user) => {
     return (
@@ -29,87 +22,85 @@ const GetAdministration = () => {
     );
   });
 
-  const onUserRemoved = (arrUsers, userName) => {
-    let arrData = arrUsers.filter((user) => {
-      if (!user.statusAdmin) {
-        return user.name.toString() !== userName.toString();
-      } else {
-        return arrUsers;
+  const onUserRemoved = (arrUsers) => {
+    arrUsers.forEach((user) => {
+      if (!user.statusAdmin && user.name !== 'Admin') {
+        let arrData = arrUsers.filter((user) => user.name.toString() !== userInAdminSelect.name.toString());
+        const dataStorage = JSON.stringify(arrData);
+        localStorage.setItem("dataStorage", dataStorage);
+        const parseRes = JSON.parse(localStorage.getItem("dataStorage"));
+        return dispatch(addedUsersInState(parseRes));
       }
     });
-    const dataStorage = JSON.stringify(arrData);
-    localStorage.setItem("dataStorage", dataStorage);
-    const parseRes = JSON.parse(localStorage.getItem("dataStorage"));
-    return dispatch(addedUsersInState(parseRes));
   };
 
-  const onUserDisabled = (arrUsers, userName) => {
-    arrUsers.find((user) => {
-      if (user.name.toString() === userName.toString()) {
-        user.userDisable = true;
-        const dataStorage = JSON.stringify(arrUsers);
-        localStorage.setItem("dataStorage", dataStorage);
-        const parseRes = JSON.parse(localStorage.getItem("dataStorage"));
-        return dispatch(addedUsersInState(parseRes));
-      }
-    })
+  const onChangeUserBlockOrStatus = (arrUsers, action) => {
+    let userObj = arrUsers.find((user) => user.name.toString() === userInAdminSelect.name.toString());
+    if (userObj.name) {
+      dispatch(action());
+      const dataStorage = JSON.stringify(arrUsers);
+      localStorage.setItem("dataStorage", dataStorage);
+      const parseRes = JSON.parse(localStorage.getItem("dataStorage"));
+      dispatch(addedUsersInState(parseRes));
+    }
   };
 
-  const onUserUnabled = (arrUsers, userName) => {
-    arrUsers.find((user) => {
-      if (user.name.toString() === userName.toString()) {
-        user.userDisable = false;
-        const dataStorage = JSON.stringify(arrUsers);
-        localStorage.setItem("dataStorage", dataStorage);
-        const parseRes = JSON.parse(localStorage.getItem("dataStorage"));
-        return dispatch(addedUsersInState(parseRes));
-      }
-    })
+  const getEventValue = (event, arrUsers) => {
+    let userObj = arrUsers.find((user) => user.name === event.target.value);
+    dispatch(getUserInAdminSelect(userObj));
   };
 
-  const getEventValue = (event, userKey, arrUsers) => {
-    userKey = event.target.value;
-    arrUsers.find((user) => {
-      if (user.name.toString() === userKey.toString()) {
-        return dispatch(getUserInAdminSelect(user));
-      }
-    })
-  };
+  const {name, password, email, statusAdmin, userDisable} = userInAdminSelect;
 
   return (
     <Fragment>
-      <div className="get-autorisation">
-        <div className="form-group">
+      <div className="get-administration">
+        <div className="form-group form-admin">
           <form>
+            <h3>Select user</h3>
             <select
-              onChange={(event) => getEventValue(event, userKey, newUsers)}
-              className="form-control"
+              onChange={(event) => getEventValue(event, users)}
+              className="form-control select-admin"
               id="exampleFormControlSelect1">
-              <option>Select User</option>
               {usersList}
             </select>
           </form>
           <div className="btn-autorisation-group">
             <button
-              onClick={() => onUserRemoved(newUsers, userKey)}
+              onClick={() => onUserRemoved(users)}
               type="button" className="btn btn-danger btn-admin">delete</button>
             <button
-              onClick={() => onUserDisabled(newUsers, userKey)}
+              onClick={() => onChangeUserBlockOrStatus(users, onChangeUserDisable)}
               type="button"
-              className="btn btn-warning btn-admin">user disable</button>
+              className="btn btn-warning btn-admin">change user block</button>
             <button
-              onClick={() => onUserUnabled(newUsers, userKey)}
+              onClick={() => onChangeUserBlockOrStatus(users, onChangeUserStatusAdmin)}
               type="button"
-              className="btn btn-success btn-admin">user unable</button>
+              className="btn btn-primary btn-admin">change status Admin</button>
           </div>
         </div>
       </div>
       <div className="user-details">
-        <span>name: {userInAdminSelect.name}</span>
-        <span>password: {userInAdminSelect.password}</span>
-        <span>email: {userInAdminSelect.email}</span>
-        <span>statusAdmin: {userInAdminSelect.statusAdmin}</span>
-        <span>userDisable: {userInAdminSelect.userDisable}</span>
+        <table className="table-details">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th>statusAdmin</th>
+            <th>userDisable</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{name}</td>
+            <td>{password}</td>
+            <td>{email}</td>
+            <td>{statusAdmin ? 'true' : 'false'}</td>
+            <td>{userDisable ? 'true' : 'false'}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </Fragment>
   );

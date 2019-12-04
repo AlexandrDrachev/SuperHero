@@ -15,6 +15,7 @@ import GetAdministration from "../get-administartion";
 import ModalReLogin from "../modal-re-login";
 
 export const isAutorisation = (userObject, dispatch, action, adminPage) => {
+
   return (
     <Fragment>
       <div className="app">
@@ -60,14 +61,14 @@ const App = () => {
 
   const [ initialState, dispatch ] = useStateValue();
   const { autorisation, window, users, userAutorisation, isAdministrator,
-          registration, userLogin, userRegistration } = initialState;
+          registration, userLogin, userRegistration, userIsBlock, userAutorisationSave } = initialState;
 
   useEffect(() => {
-
-    dispatch(addedUsersInState(getLocalStorage));
     console.log(users);
+    console.log(userAutorisationSave);
+    dispatch(addedUsersInState(getLocalStorage));
 
-    if (autorisation && !userRegistration) {
+    if (autorisation && !userRegistration && !userIsBlock) {
       dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit), users));
     }
     if (!autorisation && !isAdministrator && !registration) {
@@ -86,7 +87,7 @@ const App = () => {
       dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit, null), users))
     }
   }, [autorisation, users, isAdministrator, userAutorisation,
-    registration, userLogin, dispatch, userRegistration]);
+    registration, userLogin, dispatch, userRegistration, userAutorisationSave]);
 
   return (
     <Fragment>

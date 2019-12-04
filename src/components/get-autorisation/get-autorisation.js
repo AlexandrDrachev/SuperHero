@@ -2,7 +2,8 @@ import React from 'react';
 
 import './get-autorisation.css';
 import { onGetUserAutorisation, getWindowModal,
-         getAdminPage, onToggleUserLogin, getWindowModalRegistration } from "../../actions";
+         getAdminPage, onToggleUserLogin, getWindowModalRegistration,
+         getUserBlockPage, changeUserAutorisationSave } from "../../actions";
 import {useStateValue} from "../../state";
 import { modalComponent} from "../app/app";
 import ModalLogin from "../modal-login";
@@ -11,12 +12,17 @@ import ModalRegistration from "../modal-registration";
 const GetAutorisation = () => {
 
   const [ initialState, dispatch ] = useStateValue();
-  const { users } = initialState;
+  const { users, userAutorisation } = initialState;
 
   let checkUserAutorisation = {
     name: '',
     password: ''
   };
+
+  // if (userAutorisationSave) {
+  //   const dataStorage = JSON.stringify(users);
+  //   localStorage.setItem("dataStorage", dataStorage);
+  // }
 
   const onCheckAutorisation = (arrData, checkObj, returnElement) => {
     const check = arrData.some((user) => {
@@ -24,8 +30,18 @@ const GetAutorisation = () => {
         checkObj.name.toString() !== '' &&
         user.password.toString() === checkObj.password.toString() &&
         checkObj.password.toString() !== '' &&
-        checkObj.name.toString() !== 'Admin';
+        checkObj.name.toString() !== 'Admin' &&
+        !user.userDisable
     });
+
+    // const checkDisable = arrData.some((user) => {
+    //   return user.name.toString() === checkObj.name.toString() &&
+    //     checkObj.name.toString() !== '' &&
+    //     user.password.toString() === checkObj.password.toString() &&
+    //     checkObj.password.toString() !== '' &&
+    //     checkObj.name.toString() !== 'Admin' &&
+    //     user.userDisable
+    // });
 
     if (check) {
       return dispatch(onGetUserAutorisation(checkObj));
@@ -51,6 +67,10 @@ const GetAutorisation = () => {
           onChange={(e) => checkUserAutorisation.password = e.target.value}
           className="form-control"
           placeholder="password"/>
+        <label className="checkbox-label-autorisation">
+          <input
+            onChange={(e) => dispatch(changeUserAutorisationSave(e.target.checked))}
+            type="checkbox"/> remember me?</label>
       </form>
       <div className="btn-autorisation-group">
         <button

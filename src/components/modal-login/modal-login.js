@@ -7,7 +7,7 @@ const ModalLogin = () => {
 
   return (
     <div className="modal-backdrop">
-        <GetAutorisation />
+      <GetAutorisation />
     </div>
   );
 };

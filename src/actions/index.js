@@ -123,6 +123,13 @@ export const getAdminPage = (userObj) => {
   };
 };
 
+export const getUserBlockPage = (userObj) => {
+  return {
+    type: 'GET_USER_BLOCK_PAGE',
+    payload: userObj
+  };
+};
+
 export const onGetRegistration = () => {
   return {
     type: 'ON_GET_REGISTRATION'
@@ -165,6 +172,31 @@ export const getUserInAdminSelect = (userObj) => {
   return {
     type: 'GET_USER_IN_ADMIN_SELECT',
     payload: userObj
+  };
+};
+
+export const onChangeUserDisable = () => {
+  return {
+    type: 'ON_CHANGE_USER_DISABLE'
+  };
+};
+
+export const onChangeUserStatusAdmin = () => {
+  return {
+    type: 'ON_CHANGE_USER_STATUS_ADMIN'
+  };
+};
+
+export const changeUserAutorisationSave = (bool) => {
+  return {
+    type: 'CHANGE_USER_AUTORISATION_SAVE',
+    payload: bool
+  };
+};
+
+export const getUserSaveFromData = () => {
+  return {
+    type: 'GET_USER_SAVE_FROM_DATA'
   };
 };
 

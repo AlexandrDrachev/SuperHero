@@ -1,5 +1,5 @@
 
-export let usersData = [{statusAdmin: true, name: 'Admin', password: 123456, email: 'alexfront.front@gmail.com'}];
+// export let usersData = [{statusAdmin: true, name: 'Admin', password: 123456, email: 'alexfront.front@gmail.com'}];
 // const dataStorage = JSON.stringify(usersData);
 // localStorage.setItem("dataStorage", dataStorage);
 
@@ -30,9 +30,17 @@ export const initialState =
     userLogin: false,
     window: null,
     userAutorisation: {},
+    userAutorisationSave: false,
     isAdministrator: false,
+    userIsBlock: false,
     userRegistration: false,
-    userInAdminSelect: {}
+    userInAdminSelect: {
+      email: "rtgergertg",
+      name: "Admin",
+      password: "123456",
+      statusAdmin: true,
+      userDisable: false,
+    }
   };
 
 const reducer = (state = initialState, action) => {
@@ -149,6 +157,15 @@ const reducer = (state = initialState, action) => {
         autorisation: true,
         registration: false
       };
+    case 'GET_USER_BLOCK_PAGE':
+      return {
+        ...state,
+        userAutorisation: action.payload,
+        isAdministrator: false,
+        registration: false,
+        autorisation: true,
+        userIsBlock: true
+      };
     case 'GET_ADMIN_PAGE':
       return {
         ...state,
@@ -198,6 +215,32 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         userInAdminSelect: action.payload
+      };
+    case 'ON_CHANGE_USER_DISABLE':
+      return {
+        ...state,
+        userInAdminSelect: {
+          ...state.userInAdminSelect,
+          userDisable: !state.userInAdminSelect.userDisable
+        }
+      };
+    case 'ON_CHANGE_USER_STATUS_ADMIN':
+      return {
+        ...state,
+        userInAdminSelect: {
+          ...state.userInAdminSelect,
+          statusAdmin: !state.userInAdminSelect.statusAdmin
+        }
+      };
+    case 'CHANGE_USER_AUTORISATION_SAVE':
+      return {
+        ...state,
+        userAutorisationSave: action.payload
+      };
+    case 'GET_USER_SAVE_FROM_DATA':
+      return {
+        ...state,
+        autorisation: true
       };
 
     default:

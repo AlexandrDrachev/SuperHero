@@ -16,5 +16,10 @@
 
 .btn-autorisation-group {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
+}
+
+.checkbox-label-autorisation {
+    color: white;
 }
