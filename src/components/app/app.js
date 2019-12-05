@@ -1,20 +1,30 @@
-import React, {Fragment, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import './app.css';
+
 import Header from "../header";
 import HeroDetails from "../hero-details";
 import HomePage from "../home-page/home-page";
 import { useStateValue } from "../../state";
 import Autorisation from "../administration";
 import ModalLogin from "../modal-login";
-import { addedUsersInState, getWindowApp, getWindowModal,
-        getWindowModalRegistration, getWindowReModal, onUserExit } from '../../actions';
+import {
+  addedUsersInState, changeUserAutorisationSave, getWindowApp, getWindowModal,
+  getWindowModalRegistration, getWindowReModal, onUserExit
+} from '../../actions';
 import ModalRegistration from "../modal-registration";
 import GetAdministration from "../get-administartion";
 import ModalReLogin from "../modal-re-login";
 
 export const isAutorisation = (userObject, dispatch, action, adminPage) => {
+
+  const userExit = () => {
+    dispatch(action());
+    let userSave = {};
+    const dataStorage = JSON.stringify(userSave);
+    localStorage.setItem("userSave", dataStorage);
+  };
 
   return (
     <Fragment>
@@ -23,14 +33,15 @@ export const isAutorisation = (userObject, dispatch, action, adminPage) => {
           {adminPage}
           <h3 className="span-login">{userObject.name}</h3>
           <span
-            onClick={() => dispatch(action())}
+            onClick={() => userExit()}
             className="span-exit">Exit</span>
         </div>
         <Header/>
         <Switch>
-          <Route path="/" exact component={HomePage}/>
+          <Route path="/home" exact component={HomePage}/>
           <Route path="/details" component={HeroDetails}/>
           <Route path="/administration" component={GetAdministration}/>
+          <Redirect to="/" from="/home"/>
         </Switch>
       </div>
     </Fragment>
@@ -56,6 +67,8 @@ export const modalComponent = (Name) => {
 };
 
 let getLocalStorage = JSON.parse(localStorage.getItem("dataStorage"));
+let userSave = JSON.parse(localStorage.getItem("userSave"));
+console.log(userSave);
 
 const App = () => {
 
@@ -64,9 +77,9 @@ const App = () => {
           registration, userLogin, userRegistration, userIsBlock, userAutorisationSave } = initialState;
 
   useEffect(() => {
-    console.log(users);
-    console.log(userAutorisationSave);
+    console.log('userAutorisationSave: ', userAutorisationSave, users);
     dispatch(addedUsersInState(getLocalStorage));
+    dispatch(changeUserAutorisationSave(userSave.save));
 
     if (autorisation && !userRegistration && !userIsBlock) {
       dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit), users));
@@ -87,7 +100,7 @@ const App = () => {
       dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit, null), users))
     }
   }, [autorisation, users, isAdministrator, userAutorisation,
-    registration, userLogin, dispatch, userRegistration, userAutorisationSave]);
+    registration, userLogin, dispatch, userRegistration, userAutorisationSave, userIsBlock]);
 
   return (
     <Fragment>

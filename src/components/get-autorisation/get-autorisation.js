@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './get-autorisation.css';
 import { onGetUserAutorisation, getWindowModal,
          getAdminPage, onToggleUserLogin, getWindowModalRegistration,
          getUserBlockPage, changeUserAutorisationSave } from "../../actions";
-import {useStateValue} from "../../state";
+import { useStateValue } from "../../state";
 import { modalComponent} from "../app/app";
 import ModalLogin from "../modal-login";
 import ModalRegistration from "../modal-registration";
@@ -12,19 +12,18 @@ import ModalRegistration from "../modal-registration";
 const GetAutorisation = () => {
 
   const [ initialState, dispatch ] = useStateValue();
-  const { users, userAutorisation } = initialState;
+  const { users, userAutorisationSave } = initialState;
+
+  useEffect(() => console.log('autorisation'));
 
   let checkUserAutorisation = {
     name: '',
     password: ''
   };
 
-  // if (userAutorisationSave) {
-  //   const dataStorage = JSON.stringify(users);
-  //   localStorage.setItem("dataStorage", dataStorage);
-  // }
+  let checkbox = false;
 
-  const onCheckAutorisation = (arrData, checkObj, returnElement) => {
+  const onCheckAutorisation = (arrData, checkObj, returnElement, checkboxBool) => {
     const check = arrData.some((user) => {
       return user.name.toString() === checkObj.name.toString() &&
         checkObj.name.toString() !== '' &&
@@ -43,8 +42,19 @@ const GetAutorisation = () => {
     //     user.userDisable
     // });
 
-    if (check) {
+    if (check && !checkboxBool) {
       return dispatch(onGetUserAutorisation(checkObj));
+    }
+    if (check && checkboxBool) {
+      dispatch(changeUserAutorisationSave(checkboxBool));
+      dispatch(onGetUserAutorisation(checkObj));
+      let userSave = {
+        name: checkObj.name,
+        password: checkObj.password,
+        save: true
+      };
+      const dataStorage = JSON.stringify(userSave);
+      localStorage.setItem("userSave", dataStorage);
     }
     if (!check && checkObj.name.toString() !== 'Admin') {
       return dispatch(onToggleUserLogin());
@@ -53,7 +63,6 @@ const GetAutorisation = () => {
       return dispatch(getAdminPage(checkObj));
     }
     return dispatch(getWindowModal(returnElement));
-
   };
 
   return (
@@ -64,17 +73,19 @@ const GetAutorisation = () => {
           className="form-control"
           placeholder="nickname"/>
         <input
+          type="password"
           onChange={(e) => checkUserAutorisation.password = e.target.value}
           className="form-control"
           placeholder="password"/>
         <label className="checkbox-label-autorisation">
           <input
-            onChange={(e) => dispatch(changeUserAutorisationSave(e.target.checked))}
+            className="form-check-input"
+            onChange={(e) => checkbox = e.target.checked}
             type="checkbox"/> remember me?</label>
       </form>
       <div className="btn-autorisation-group">
         <button
-          onClick={() => onCheckAutorisation(users, checkUserAutorisation, modalComponent(ModalLogin))}
+          onClick={() => onCheckAutorisation(users, checkUserAutorisation, modalComponent(ModalLogin), checkbox)}
           className="btn btn-info btn-autorisation">Let's go!</button>
         <button
           onClick={() => dispatch(getWindowModalRegistration(modalComponent(ModalRegistration)))}

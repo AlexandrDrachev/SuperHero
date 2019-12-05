@@ -44,7 +44,6 @@ export const initialState =
   };
 
 const reducer = (state = initialState, action) => {
-
   switch (action.type) {
 
     case 'INC':
@@ -202,7 +201,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isAdministrator: false,
-        autorisation: false
+        autorisation: false,
+        userAutorisationSave: false
       };
     case 'ON_REGISTRATION_NEW_USER':
       return {
