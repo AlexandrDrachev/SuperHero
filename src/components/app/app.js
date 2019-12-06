@@ -10,12 +10,14 @@ import { useStateValue } from "../../state";
 import Autorisation from "../administration";
 import ModalLogin from "../modal-login";
 import {
-  addedUsersInState, changeUserAutorisationSave, getWindowApp, getWindowModal,
-  getWindowModalRegistration, getWindowReModal, onUserExit
+  addedUsersInState, getWindowApp, getWindowModal,
+  getWindowModalRegistration, getWindowReModal, onUserExit, getUserSaveFromData, heroRequested, heroLoaded, heroError
 } from '../../actions';
 import ModalRegistration from "../modal-registration";
 import GetAdministration from "../get-administartion";
 import ModalReLogin from "../modal-re-login";
+import ServiceApi from "../../services";
+import Game from "../game";
 
 export const isAutorisation = (userObject, dispatch, action, adminPage) => {
 
@@ -67,8 +69,8 @@ export const modalComponent = (Name) => {
 };
 
 let getLocalStorage = JSON.parse(localStorage.getItem("dataStorage"));
-let userSave = JSON.parse(localStorage.getItem("userSave"));
-console.log(userSave);
+let userSav = JSON.parse(localStorage.getItem("userSave"));
+console.log(userSav);
 
 const App = () => {
 
@@ -77,9 +79,17 @@ const App = () => {
           registration, userLogin, userRegistration, userIsBlock, userAutorisationSave } = initialState;
 
   useEffect(() => {
-    console.log('userAutorisationSave: ', userAutorisationSave, users);
+
     dispatch(addedUsersInState(getLocalStorage));
-    dispatch(changeUserAutorisationSave(userSave.save));
+    const fetchData = async () => {
+      let service = new ServiceApi();
+      const result = await service.getUserSave()
+        .then((res) => res);
+      if (result.save) {
+        dispatch(getUserSaveFromData(result, result.save));
+      }
+    };
+    fetchData();
 
     if (autorisation && !userRegistration && !userIsBlock) {
       dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit), users));
@@ -104,9 +114,12 @@ const App = () => {
 
   return (
     <Fragment>
-      {window}
+
+      <Game />
     </Fragment>
   );
 };
 
 export default App;
+
+//app returned {window}

@@ -202,7 +202,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         isAdministrator: false,
         autorisation: false,
-        userAutorisationSave: false
+        userAutorisationSave: false,
+        registration: false,
+        userAutorisation: {}
       };
     case 'ON_REGISTRATION_NEW_USER':
       return {
@@ -240,7 +242,9 @@ const reducer = (state = initialState, action) => {
     case 'GET_USER_SAVE_FROM_DATA':
       return {
         ...state,
-        autorisation: true
+        autorisation: true,
+        userAutorisationSave: action.bool,
+        userAutorisation: action.payload
       };
 
     default:

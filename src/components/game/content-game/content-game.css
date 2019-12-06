@@ -1,0 +1,12 @@
+
+
+.content-game {
+    border-top: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+}

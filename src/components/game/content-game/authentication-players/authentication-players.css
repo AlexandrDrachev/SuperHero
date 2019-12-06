@@ -1,0 +1,76 @@
+
+
+.authentication-players {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-details {
+    margin: 20px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 10px;
+    width: 200px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.change-player {
+    width: 350px;
+    height: 380px;
+}
+
+.player-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 190px;
+    width: 170px;
+    margin-bottom: 10px;
+}
+
+.img-change-player {
+    height: 250px;
+    width: 210px;
+}
+
+.img-img-player {
+    height: 100%;
+    border-radius: 10px;
+    margin: 0 12px;
+}
+
+.line-items {
+    display: flex;
+    justify-content: center;
+    /*border: 1px solid black;*/
+    /*width: 333px;*/
+    /*height: 111px;*/
+}
+
+.btn-item {
+    margin: 2px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    height: 120px;
+    width: 105px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: azure;
+}
+
+.btn-item:hover{
+    cursor: pointer;
+}
+
+.player-avatar {
+    height: 120px;
+    width: 105px;
+    border-radius: 5px;
+}

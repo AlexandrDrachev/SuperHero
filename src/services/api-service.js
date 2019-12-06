@@ -118,6 +118,16 @@ export default class ServiceApi {
     return await this.getUrl(`${this.baseUrl}/${id}`)
       .then((res) => res.json());
   };
+
+  userSave = JSON.parse(localStorage.getItem("userSave"));
+
+  getUserSave = async () => {
+    return await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(this.userSave);
+      }, 700);
+    });
+  }
 }
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import './get-autorisation.css';
 import { onGetUserAutorisation, getWindowModal,
@@ -12,9 +12,7 @@ import ModalRegistration from "../modal-registration";
 const GetAutorisation = () => {
 
   const [ initialState, dispatch ] = useStateValue();
-  const { users, userAutorisationSave } = initialState;
-
-  useEffect(() => console.log('autorisation'));
+  const { users } = initialState;
 
   let checkUserAutorisation = {
     name: '',

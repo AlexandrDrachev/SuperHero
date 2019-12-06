@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 import './content.css';
 import ServiceApi from "../../services";
@@ -15,7 +15,7 @@ const Content = () => {
   const [ initialState, dispatch ] = useStateValue();
 
   const { idHero, imgHero, nameHero, genderHero, raceHero, publisherHero, error } = initialState;
-  const newId = useRef(null);
+  let newId;
 
   useEffect( () => {
     const fetchData = async (id) => {
@@ -30,7 +30,7 @@ const Content = () => {
     };
     fetchData(idHero);
 
-  }, [idHero, dispatch, newId]);
+  }, [idHero, dispatch]);
 
   if (!imgHero) {
     return <div className="img-hero"><Spinner /></div>
@@ -41,7 +41,7 @@ const Content = () => {
       return () => dispatch(returnNewId());
     }
     try {
-      return newId.current = value
+      return newId = value
     } catch {
       return warningError()
     }
@@ -84,7 +84,7 @@ const Content = () => {
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">search hero by name</label>
           <select
-            onChange={(event) => newId.current = event.target.value}
+            onChange={(event) => newId = event.target.value}
             className="form-control"
             id="exampleFormControlSelect1">
             {arrHero.map((hero) => {
@@ -105,7 +105,7 @@ const Content = () => {
           aria-describedby="emailHelp"
           placeholder="search hero by id (1 - 731)" />
         <button
-          onClick={() => getOnToggleIdHero(+newId.current)}
+          onClick={() => getOnToggleIdHero(+newId)}
           className="btn btn-info btn-head-hero">Get Hero</button>
       </div>
     </div>

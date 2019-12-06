@@ -194,9 +194,11 @@ export const changeUserAutorisationSave = (bool) => {
   };
 };
 
-export const getUserSaveFromData = () => {
+export const getUserSaveFromData = (userSaveObj, bool) => {
   return {
-    type: 'GET_USER_SAVE_FROM_DATA'
+    type: 'GET_USER_SAVE_FROM_DATA',
+    payload: userSaveObj,
+    bool: bool
   };
 };
 

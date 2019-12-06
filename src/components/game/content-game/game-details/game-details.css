@@ -1,0 +1,22 @@
+
+
+.btn-game-details {
+    margin: 3px;
+    width: 100px;
+    padding: 2px;
+}
+
+.player-avatar-icon {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.exit-the-game {
+    color: red;
+}
+
+.exit-the-game:hover {
+    cursor: pointer;
+}
