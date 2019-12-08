@@ -40,6 +40,24 @@ export const initialState =
       password: "123456",
       statusAdmin: true,
       userDisable: false,
+    },
+//STATE_IN_GAME----------
+    game: {
+      loading: true,
+      btnPlay: true,
+      btnSlide: true,
+      playerX: {
+        player: {},
+        btnChangePlayer: false,
+        btnAddedPlayer: true,
+        playerReady: false
+      },
+      player0: {
+        player: {},
+        btnChangePlayer: true,
+        btnAddedPlayer: true,
+        playerReady: false
+      }
     }
   };
 
@@ -246,6 +264,70 @@ const reducer = (state = initialState, action) => {
         userAutorisationSave: action.bool,
         userAutorisation: action.payload
       };
+    case 'GET_DATA_GAME':
+        return {
+            ...state,
+            game: {
+                ...state.game,
+                loading: false
+            }
+        };
+      case 'ON_FETCH_PLAYER_X':
+        return {
+            ...state,
+            game: {
+                ...state.game,
+                playerX: {
+                    ...state.game.playerX,
+                    player: action.payload
+                }
+            }
+        };
+    case 'ON_CHANGE_PLAYER_X':
+      return {
+          ...state,
+          game: {
+              ...state.game,
+              btnSlide: false,
+              playerX: {
+                  ...state.game.playerX,
+                  btnChangePlayer: true,
+                  btnAddedPlayer: false
+              }
+          }
+      };
+    case 'ON_READY_PLAYER_X':
+      return {
+          ...state,
+          game: {
+              ...state.game,
+              btnSlide: true,
+              playerX: {
+                  ...state.game.playerX,
+                  player: action.payload,
+                  playerReady: true,
+                  btnAddedPlayer: true,
+                  btnChangePlayer: true
+              },
+              player0: {
+                  ...state.game.player0,
+                  btnChangePlayer: false
+              }
+          }
+      };
+    case 'ON_CHANGE_PLAYER_0':
+          return {
+              ...state,
+              game: {
+                  ...state.game,
+                  btnSlide: false,
+                  player0: {
+                      ...state.game.player0,
+                      btnChangePlayer: true,
+                      btnAddedPlayer: false
+                  }
+              }
+          };
 
     default:
       return state;

@@ -202,3 +202,35 @@ export const getUserSaveFromData = (userSaveObj, bool) => {
   };
 };
 
+export const getDataGame = () => {
+  return {
+    type: 'GET_DATA_GAME'
+  };
+};
+
+export const onFetchPlayerX = (objHero) => {
+  return {
+    type: 'ON_FETCH_PLAYER_X',
+    payload: objHero
+  };
+};
+
+export const onChangePlayerX = () => {
+  return {
+    type: 'ON_CHANGE_PLAYER_X'
+  };
+};
+
+export const onChangePlayer0 = () => {
+  return {
+    type: 'ON_CHANGE_PLAYER_0'
+  };
+};
+
+export const onReadyPlayerX = (objHero) => {
+  return {
+    type: 'ON_READY_PLAYER_X',
+    payload: objHero
+  };
+};
+

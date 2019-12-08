@@ -76,11 +76,11 @@ const App = () => {
 
   const [ initialState, dispatch ] = useStateValue();
   const { autorisation, window, users, userAutorisation, isAdministrator,
-          registration, userLogin, userRegistration, userIsBlock, userAutorisationSave } = initialState;
+          registration, userLogin, userRegistration, userIsBlock, userAutorisationSave, objHero } = initialState;
 
   useEffect(() => {
 
-    dispatch(addedUsersInState(getLocalStorage));
+      dispatch(addedUsersInState(getLocalStorage));
     const fetchData = async () => {
       let service = new ServiceApi();
       const result = await service.getUserSave()
@@ -110,12 +110,12 @@ const App = () => {
       dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit, null), users))
     }
   }, [autorisation, users, isAdministrator, userAutorisation,
-    registration, userLogin, dispatch, userRegistration, userAutorisationSave, userIsBlock]);
+    registration, userLogin, dispatch, userRegistration, userAutorisationSave, userIsBlock, objHero]);
 
   return (
     <Fragment>
 
-      <Game />
+        <Game />
     </Fragment>
   );
 };
