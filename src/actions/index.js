@@ -208,13 +208,6 @@ export const getDataGame = () => {
   };
 };
 
-export const onFetchPlayerX = (objHero) => {
-  return {
-    type: 'ON_FETCH_PLAYER_X',
-    payload: objHero
-  };
-};
-
 export const onChangePlayerX = () => {
   return {
     type: 'ON_CHANGE_PLAYER_X'
@@ -231,6 +224,25 @@ export const onReadyPlayerX = (objHero) => {
   return {
     type: 'ON_READY_PLAYER_X',
     payload: objHero
+  };
+};
+
+export const onReadyPlayer0 = (objHero) => {
+  return {
+    type: 'ON_READY_PLAYER_0',
+    payload: objHero
+  };
+};
+
+export const onField = () => {
+  return {
+    type: 'ON_FIELD'
+  };
+};
+
+export const onChangePlayerStep = () => {
+  return {
+    type: 'ON_CHANGE_PLAYER_STEP'
   };
 };
 

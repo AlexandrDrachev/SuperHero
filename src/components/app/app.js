@@ -70,17 +70,16 @@ export const modalComponent = (Name) => {
 
 let getLocalStorage = JSON.parse(localStorage.getItem("dataStorage"));
 let userSav = JSON.parse(localStorage.getItem("userSave"));
-console.log(userSav);
 
 const App = () => {
 
   const [ initialState, dispatch ] = useStateValue();
   const { autorisation, window, users, userAutorisation, isAdministrator,
-          registration, userLogin, userRegistration, userIsBlock, userAutorisationSave, objHero } = initialState;
+          registration, userLogin, userRegistration, userIsBlock, userAutorisationSave, objHero, game } = initialState;
 
   useEffect(() => {
 
-      dispatch(addedUsersInState(getLocalStorage));
+    dispatch(addedUsersInState(getLocalStorage));
     const fetchData = async () => {
       let service = new ServiceApi();
       const result = await service.getUserSave()

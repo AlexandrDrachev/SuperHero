@@ -46,7 +46,7 @@
 
 .line-items {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     /*border: 1px solid black;*/
     /*width: 333px;*/
     /*height: 111px;*/
@@ -73,4 +73,25 @@
     height: 120px;
     width: 105px;
     border-radius: 5px;
+}
+
+.versus-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.versus-image {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.versus-img {
+    width: 100%;
+    height: 100%;
 }

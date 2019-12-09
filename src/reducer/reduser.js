@@ -46,18 +46,29 @@ export const initialState =
       loading: true,
       btnPlay: true,
       btnSlide: true,
+      field: false,
       playerX: {
-        player: {},
+        name: 'Player X',
+        player: {
+          name: '',
+          image: ''
+        },
         btnChangePlayer: false,
         btnAddedPlayer: true,
         playerReady: false
       },
       player0: {
-        player: {},
+        name: 'Player 0',
+        player: {
+          name: '',
+          image: ''
+        },
         btnChangePlayer: true,
         btnAddedPlayer: true,
         playerReady: false
-      }
+      },
+      stepPlayerX: true,
+      historyStep: [[null, null, null, null, null, null, null, null, null]]
     }
   };
 
@@ -272,62 +283,83 @@ const reducer = (state = initialState, action) => {
                 loading: false
             }
         };
-      case 'ON_FETCH_PLAYER_X':
-        return {
-            ...state,
-            game: {
-                ...state.game,
-                playerX: {
-                    ...state.game.playerX,
-                    player: action.payload
-                }
-            }
-        };
     case 'ON_CHANGE_PLAYER_X':
       return {
-          ...state,
-          game: {
-              ...state.game,
-              btnSlide: false,
-              playerX: {
-                  ...state.game.playerX,
-                  btnChangePlayer: true,
-                  btnAddedPlayer: false
-              }
+        ...state,
+        game: {
+          ...state.game,
+          btnSlide: false,
+          playerX: {
+            ...state.game.playerX,
+            btnChangePlayer: true,
+            btnAddedPlayer: false
           }
+        }
       };
     case 'ON_READY_PLAYER_X':
       return {
-          ...state,
-          game: {
-              ...state.game,
-              btnSlide: true,
-              playerX: {
-                  ...state.game.playerX,
-                  player: action.payload,
-                  playerReady: true,
-                  btnAddedPlayer: true,
-                  btnChangePlayer: true
-              },
-              player0: {
-                  ...state.game.player0,
-                  btnChangePlayer: false
-              }
+        ...state,
+        game: {
+          ...state.game,
+          btnSlide: true,
+          playerX: {
+            ...state.game.playerX,
+            player: action.payload,
+            playerReady: true,
+            btnAddedPlayer: true,
+            btnChangePlayer: true
+          },
+          player0: {
+            ...state.game.player0,
+            btnChangePlayer: false
           }
+        }
       };
     case 'ON_CHANGE_PLAYER_0':
-          return {
-              ...state,
-              game: {
-                  ...state.game,
-                  btnSlide: false,
-                  player0: {
-                      ...state.game.player0,
-                      btnChangePlayer: true,
-                      btnAddedPlayer: false
-                  }
-              }
-          };
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          btnSlide: false,
+          player0: {
+              ...state.game.player0,
+              btnChangePlayer: true,
+              btnAddedPlayer: false
+          }
+        }
+      };
+    case 'ON_READY_PLAYER_0':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          btnSlide: true,
+          btnPlay: false,
+          player0: {
+            ...state.game.player0,
+            player: action.payload,
+            btnChangePlayer: true,
+            btnAddedPlayer: true,
+            playerReady: true
+          }
+        }
+      };
+    case 'ON_FIELD':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          field: true
+        }
+      };
+    case 'ON_CHANGE_PLAYER_STEP':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          stepPlayerX: !state.game.stepPlayerX
+        }
+      };
 
     default:
       return state;
