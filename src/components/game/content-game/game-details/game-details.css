@@ -14,9 +14,13 @@
 }
 
 .exit-the-game {
-    color: red;
+    margin-bottom: 3px;
 }
 
 .exit-the-game:hover {
     cursor: pointer;
+}
+
+.btn-new-game {
+    margin: 0 3px;
 }

@@ -1,6 +1,10 @@
 import React from 'react';
+import {useStateValue} from "../../../../state";
 
 const PlayerDetails = ({ player, dispatch, action }) => {
+
+  const [ initialState ] = useStateValue();
+  const { game: { winner: { status, message } } } = initialState;
 
   const img = (
     <img
@@ -19,13 +23,20 @@ const PlayerDetails = ({ player, dispatch, action }) => {
       );
     };
 
+    const messageWinner = (
+      <div className="player-winner-message">
+        <span>'WINNER'</span>
+        <span>{message}!!!</span>
+      </div>
+    );
+
     return (
       <div className="player-details">
-        <h5>{ player.name }</h5>
+        <h5>{ player.playerReady ? player.player.name : player.name }</h5>
         <div className="player-img">
           { !player.playerReady ? btnChange() : img }
         </div>
-        <h4>{ player.playerReady ? player.player.name : true }</h4>
+        <h4>{ player.playerReady ? (status ? messageWinner : true) : true }</h4>
       </div>
     );
 };

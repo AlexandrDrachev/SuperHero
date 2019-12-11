@@ -240,9 +240,56 @@ export const onField = () => {
   };
 };
 
+export const updateActivePlayer = () => {
+  return {
+    type: 'UPDATE_ACTIVE_PLAYER'
+  };
+};
+
 export const onChangePlayerStep = () => {
   return {
     type: 'ON_CHANGE_PLAYER_STEP'
+  };
+};
+
+export const onHistoryNextStep = (playerImg, playerIdx) => {
+  return {
+    type: 'ON_HISTORY_NEXT_STEP',
+    player: playerImg,
+    idx: playerIdx
+  };
+};
+
+export const updatePlayerXScore = (idx) => {
+  return {
+    type: 'UPDATE_PLAYER_X_SCORE',
+    payload: idx
+  };
+};
+
+export const updatePlayer0Score = (idx) => {
+  return {
+    type: 'UPDATE_PLAYER_0_SCORE',
+    payload: idx
+  };
+};
+
+export const isWinner = (player) => {
+  return {
+    type: 'IS_WINNER',
+    payload: player
+  };
+};
+
+export const onTryAgain = () => {
+  return {
+    type: 'ON_TRY_AGAIN'
+  };
+};
+
+export const onNewGame = () => {
+  return {
+    type: 'ON_NEW_GAME'
   };
 };
 

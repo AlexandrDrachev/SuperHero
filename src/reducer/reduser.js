@@ -3,6 +3,8 @@
 // const dataStorage = JSON.stringify(usersData);
 // localStorage.setItem("dataStorage", dataStorage);
 
+import {__RouterContext} from "react-router";
+
 export const initialState =
   {
     idHero: 460,
@@ -49,6 +51,7 @@ export const initialState =
       field: false,
       playerX: {
         name: 'Player X',
+        score: [],
         player: {
           name: '',
           image: ''
@@ -59,6 +62,7 @@ export const initialState =
       },
       player0: {
         name: 'Player 0',
+        score: [],
         player: {
           name: '',
           image: ''
@@ -67,8 +71,16 @@ export const initialState =
         btnAddedPlayer: true,
         playerReady: false
       },
-      stepPlayerX: true,
-      historyStep: [[null, null, null, null, null, null, null, null, null]]
+      activePlayer: {player: {image: '', name: '' }},
+      stepCount: 0,
+      stepPlayerX: false,
+      historyStep: [
+        {players: [null, null, null, null, null, null, null, null, null]}
+      ],
+      winner: {
+        status: false,
+        message: '...pending'
+      }
     }
   };
 
@@ -349,7 +361,17 @@ const reducer = (state = initialState, action) => {
         ...state,
         game: {
           ...state.game,
-          field: true
+          field: true,
+          activePlayer: state.game.playerX,
+          stepPlayerX: true
+        }
+      };
+    case 'UPDATE_ACTIVE_PLAYER':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          activePlayer: state.game.stepPlayerX ? state.game.playerX : state.game.player0,
         }
       };
     case 'ON_CHANGE_PLAYER_STEP':
@@ -358,6 +380,132 @@ const reducer = (state = initialState, action) => {
         game: {
           ...state.game,
           stepPlayerX: !state.game.stepPlayerX
+        }
+      };
+    case 'ON_HISTORY_NEXT_STEP':
+      let newStep = state.game.historyStep[state.game.historyStep.length - 1];
+      let playerIdx = newStep.players.findIndex((item) => item === action.idx);
+      if (playerIdx === -1) {
+        newStep.players[action.idx] = action.player;
+      }
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          stepCount: state.game.stepCount + 1,
+          historyStep: [
+            ...state.game.historyStep,
+            newStep
+          ]
+        }
+      };
+    case 'UPDATE_PLAYER_X_SCORE':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          playerX: {
+            ...state.game.playerX,
+            score: [
+              ...state.game.playerX.score,
+              action.payload.toString()
+            ]
+            // score: state.game.playerX.score + action.payload.toString()
+          }
+        }
+      };
+    case 'UPDATE_PLAYER_0_SCORE':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          player0: {
+            ...state.game.player0,
+            score: [
+              ...state.game.player0.score,
+              action.payload.toString()
+            ]
+            // score: state.game.player0.score + +action.payload.toString()
+          }
+        }
+      };
+    case 'IS_WINNER':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          winner: {
+            ...state.game.winner,
+            status: true,
+            message: action.payload
+          }
+        }
+      };
+    case 'ON_TRY_AGAIN':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          stepCount: 0,
+          stepPlayerX: true,
+          historyStep: [
+            {players: [null, null, null, null, null, null, null, null, null]}
+          ],
+          activePlayer: state.game.playerX,
+          playerX: {
+            ...state.game.playerX,
+            score: []
+          },
+          player0: {
+            ...state.game.player0,
+            score: []
+          },
+          winner: {
+            status: false,
+            message: '...pending'
+          }
+        }
+      };
+    case 'ON_NEW_GAME':
+      return {
+        ...state,
+        game: {
+          loading: true,
+          btnPlay: true,
+          btnSlide: true,
+          field: false,
+          playerX: {
+            name: 'Player X',
+            score: [],
+            player: {
+              name: '',
+              image: ''
+            },
+            btnChangePlayer: false,
+            btnAddedPlayer: true,
+            playerReady: false
+          },
+          player0: {
+            name: 'Player 0',
+            score: [],
+            player: {
+              name: '',
+              image: ''
+            },
+            btnChangePlayer: true,
+            btnAddedPlayer: true,
+            playerReady: false
+          },
+          activePlayer: {player: {image: '', name: '' }},
+          stepCount: 0,
+          stepPlayerX: false,
+          historyStep: [
+            {players: [null, null, null, null, null, null, null, null, null]}
+          ],
+          winner: {
+            status: false,
+            message: '...pending'
+          }
         }
       };
 
