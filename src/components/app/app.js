@@ -18,6 +18,7 @@ import GetAdministration from "../get-administartion";
 import ModalReLogin from "../modal-re-login";
 import ServiceApi from "../../services";
 import Game from "../game";
+import ContentGame from "../game/content-game";
 
 export const isAutorisation = (userObject, dispatch, action, adminPage) => {
 
@@ -41,6 +42,7 @@ export const isAutorisation = (userObject, dispatch, action, adminPage) => {
         <Header/>
         <Switch>
           <Route path="/home" exact component={HomePage}/>
+          <Route path="/game" component={ContentGame}/>
           <Route path="/details" component={HeroDetails}/>
           <Route path="/administration" component={GetAdministration}/>
           <Redirect to="/" from="/home"/>
@@ -75,7 +77,7 @@ const App = () => {
 
   const [ initialState, dispatch ] = useStateValue();
   const { autorisation, window, users, userAutorisation, isAdministrator,
-          registration, userLogin, userRegistration, userIsBlock, userAutorisationSave, objHero, game } = initialState;
+          registration, userLogin, userRegistration, userIsBlock, userAutorisationSave, objHero, game: { gamePageApp } } = initialState;
 
   useEffect(() => {
 
@@ -90,10 +92,13 @@ const App = () => {
     };
     fetchData();
 
+    if (gamePageApp && !autorisation && !isAdministrator && !registration) {
+      dispatch(getWindowApp(<Game />, users));
+    }
     if (autorisation && !userRegistration && !userIsBlock) {
       dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit), users));
     }
-    if (!autorisation && !isAdministrator && !registration) {
+    if (!autorisation && !isAdministrator && !registration && !gamePageApp) {
       dispatch(getWindowModal(modalComponent(ModalLogin)));
     }
     if (!autorisation && !registration && isAdministrator) {
@@ -109,12 +114,11 @@ const App = () => {
       dispatch(getWindowApp(isAutorisation(userAutorisation, dispatch, onUserExit, null), users))
     }
   }, [autorisation, users, isAdministrator, userAutorisation,
-    registration, userLogin, dispatch, userRegistration, userAutorisationSave, userIsBlock, objHero]);
+    registration, userLogin, dispatch, userRegistration, userAutorisationSave, userIsBlock, objHero, gamePageApp]);
 
   return (
     <Fragment>
-
-        <Game />
+      {window}
     </Fragment>
   );
 };

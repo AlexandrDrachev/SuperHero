@@ -3,11 +3,12 @@ import React from 'react';
 import './get-autorisation.css';
 import { onGetUserAutorisation, getWindowModal,
          getAdminPage, onToggleUserLogin, getWindowModalRegistration,
-         getUserBlockPage, changeUserAutorisationSave } from "../../actions";
+         getUserBlockPage, changeUserAutorisationSave, onGetGamePage } from "../../actions";
 import { useStateValue } from "../../state";
 import { modalComponent} from "../app/app";
 import ModalLogin from "../modal-login";
 import ModalRegistration from "../modal-registration";
+import {Link} from "react-router-dom";
 
 const GetAutorisation = () => {
 
@@ -88,6 +89,11 @@ const GetAutorisation = () => {
         <button
           onClick={() => dispatch(getWindowModalRegistration(modalComponent(ModalRegistration)))}
           className="btn btn-info btn-autorisation">registration</button>
+        <button
+          onClick={() => dispatch(onGetGamePage())}
+          className="btn btn-info btn-autorisation">
+          Game
+        </button>
       </div>
     </div>
   );

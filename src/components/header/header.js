@@ -50,7 +50,10 @@ const Header = () => {
 
   return (
     <div className="header">
-      <Link to="/home"><h1>SuperHero</h1></Link>
+      <div className="headers-routes">
+        <Link to="/home"><h1>SuperHero</h1></Link>
+        <Link to="/game"><h5>SuperHero...Game</h5></Link>
+      </div>
       <div className="random-hero">
         <img className="img-random-hero animated fadeIn delay-2s" alt="not found" src={randomImgHero} />
         <div className="random-hero-info">

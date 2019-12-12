@@ -45,6 +45,7 @@ export const initialState =
     },
 //STATE_IN_GAME----------
     game: {
+      gamePageApp: false,
       loading: true,
       btnPlay: true,
       btnSlide: true,
@@ -145,7 +146,6 @@ const reducer = (state = initialState, action) => {
           countAddedHero: state.countAddedHero + 1
         };
       }
-
       return {...state};
     case 'ON_HERO_CART_REMOVED':
       return {
@@ -383,22 +383,35 @@ const reducer = (state = initialState, action) => {
         }
       };
     case 'ON_HISTORY_NEXT_STEP':
-      let newStep = state.game.historyStep[state.game.historyStep.length - 1];
+      let newHistoryStep = state.game.historyStep.slice();
+      let newStep = newHistoryStep[state.game.historyStep.length - 1];
       let playerIdx = newStep.players.findIndex((item) => item === action.idx);
       if (playerIdx === -1) {
         newStep.players[action.idx] = action.player;
-      }
-      return {
-        ...state,
-        game: {
-          ...state.game,
-          stepCount: state.game.stepCount + 1,
-          historyStep: [
-            ...state.game.historyStep,
-            newStep
-          ]
+        console.log('newStep: ', newStep);
+        return {
+          ...state,
+          game: {
+            ...state.game,
+            stepCount: state.game.stepCount + 1,
+            historyStep: [
+              ...state.game.historyStep,
+              newStep
+            ]
+          }
         }
-      };
+      }
+      return state;
+
+    // case 'ON_HISTORY_NEXT_STEP':
+    //   return {
+    //     ...state,
+    //     game: {
+    //       ...state.game,
+    //       historyStep: action.payload
+    //     }
+    //   };
+
     case 'UPDATE_PLAYER_X_SCORE':
       return {
         ...state,
@@ -506,6 +519,38 @@ const reducer = (state = initialState, action) => {
             status: false,
             message: '...pending'
           }
+        }
+      };
+    case 'ON_GET_GAME_PAGE':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          gamePageApp: true
+        }
+      };
+    case 'ON_EXIT_GAME_PAGE':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          gamePageApp: false
+        }
+      };
+    case 'ON_BACK_ONE_STEP_HISTORY':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          stepCount: state.game.stepCount - 1
+        }
+      };
+    case 'ON_FORVARD_ONE_STEP_HISTORY':
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          stepCount: state.game.stepCount + 1
         }
       };
 

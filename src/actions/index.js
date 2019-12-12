@@ -252,13 +252,20 @@ export const onChangePlayerStep = () => {
   };
 };
 
-export const onHistoryNextStep = (playerImg, playerIdx) => {
+export const onHistoryNextStep = (player, idx) => {
   return {
     type: 'ON_HISTORY_NEXT_STEP',
-    player: playerImg,
-    idx: playerIdx
+    player: player,
+    idx: idx
   };
 };
+
+// export const onHistoryNextStep = (newArrHistory) => {
+//   return {
+//     type: 'ON_HISTORY_NEXT_STEP',
+//     payload: newArrHistory
+//   };
+// };
 
 export const updatePlayerXScore = (idx) => {
   return {
@@ -290,6 +297,30 @@ export const onTryAgain = () => {
 export const onNewGame = () => {
   return {
     type: 'ON_NEW_GAME'
+  };
+};
+
+export const onGetGamePage = () => {
+  return {
+    type: 'ON_GET_GAME_PAGE'
+  };
+};
+
+export const onExitGamePage = () => {
+  return {
+    type: 'ON_EXIT_GAME_PAGE'
+  };
+};
+
+export const onBackOneStepHistory = () => {
+  return {
+    type: 'ON_BACK_ONE_STEP_HISTORY'
+  };
+};
+
+export const onForvardOneStepHistory = () => {
+  return {
+    type: 'ON_FORVARD_ONE_STEP_HISTORY'
   };
 };
 

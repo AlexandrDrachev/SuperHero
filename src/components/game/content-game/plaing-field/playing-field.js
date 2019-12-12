@@ -11,8 +11,8 @@ const winnerCombinations = [ '012', '345', '678', '036', '147', '258', '048', '2
 const PlayingField = () => {
 
   const [ initialState, dispatch ] = useStateValue();
-  const { game: { playerStyle, playerX, player0, stepPlayerX, historyStep,
-          activePlayer, field, activePlayer: { player: { name } }, winner } } = initialState;
+  const { game: { playerX, player0, stepPlayerX, historyStep,
+          activePlayer, field, winner, stepCount } } = initialState;
 
   useEffect(() => {
 
@@ -36,7 +36,7 @@ const PlayingField = () => {
     if (winner0) {
       dispatch(isWinner(player0.player.name));
     }
-  }, [playerX, player0, activePlayer, field]);
+  }, [playerX, player0, activePlayer, field, historyStep]);
 
   const imgPlayer = (
     <img className="img-img-player" src={activePlayer.player.image.url} alt="no img" />
@@ -52,8 +52,23 @@ const PlayingField = () => {
     }
   };
 
+
+
+  // const testClick = (item, idx) => {
+  //
+  //   let newHistoryStep = historyStep.slice();
+  //   newHistoryStep[newHistoryStep.length - 1].players[idx] = imgPlayer;
+  //
+  //   stepPlayerX ? dispatch(updatePlayerXScore(idx)) : dispatch(updatePlayer0Score(idx));
+  //   if (!item && !winner.status) {
+  //     dispatch(onChangePlayerStep());
+  //     dispatch(onHistoryNextStep(newHistoryStep));
+  //     dispatch(updateActivePlayer());
+  //   }
+  // };
+
   const returnLastItem = (arr) => {
-    return arr[arr.length - 1];
+    return arr[stepCount];
   };
 
   const buttonItems = returnLastItem(historyStep);
@@ -62,6 +77,9 @@ const PlayingField = () => {
       <ButtonItem item={item} idx={idx} func={testClick} key={idx}/>
     );
   });
+
+  console.log('historyStep: ', historyStep);
+  console.log('playingField: ', playingField[stepCount].key);
 
 
   return (

@@ -2,14 +2,13 @@ import React from 'react';
 
 import './game-details.css';
 import { useStateValue } from "../../../../state";
-import { onTryAgain, onNewGame } from "../../../../actions";
-
-const img1 = "https://www.superherodb.com/pictures2/portraits/10/100/639.jpg";
+import { onTryAgain, onNewGame, onBackOneStepHistory, onForvardOneStepHistory } from "../../../../actions";
+import {Link} from "react-router-dom";
 
 const GameDetails = () => {
 
   const [ initialState, dispatch ] = useStateValue();
-  const { game, game: { stepCount, field, activePlayer, winner } } = initialState;
+  const { autorisation, isAdministrator, game: { stepCount, field, activePlayer, winner, historyStep } } = initialState;
 
   const back = '<<<';
   const forvard = '>>>';
@@ -20,15 +19,14 @@ const GameDetails = () => {
         <tr>
           <th>move</th>
           <th>game step</th>
-          <th>step back</th>
-          <th>step forward</th>
+          <th>history game</th>
           <th>winner</th>
           <th>
-            <button
-              onClick={() => {}}
+            <Link to="/home"><button
+              disabled={!autorisation && !isAdministrator}
               className="btn btn-danger btn-sm exit-the-game">
               exit the game
-            </button>
+            </button></Link>
           </th>
         </tr>
       </thead>
@@ -43,9 +41,20 @@ const GameDetails = () => {
           </td>
           <td>{stepCount}</td>
           <td>
-            <button type="button" className="btn btn-outline-danger btn-game-details">{back}</button></td>
-          <td>
-            <button type="button" className="btn btn-outline-success btn-game-details">{forvard}</button></td>
+            <button
+              onClick={() => dispatch(onBackOneStepHistory())}
+              disabled={!winner.status || stepCount < 1}
+              type="button"
+              className="btn btn-outline-danger btn-game-details">
+              {back}
+            </button>
+            <button
+              onClick={() => dispatch(onForvardOneStepHistory())}
+              disabled={!winner.status || stepCount >= historyStep.length - 1}
+              type="button"
+              className="btn btn-outline-success btn-game-details">
+              {forvard}
+            </button></td>
           <td>{winner.message}</td>
           <th>
             <button
