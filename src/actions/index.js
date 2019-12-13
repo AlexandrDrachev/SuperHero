@@ -27,12 +27,6 @@ export const heroError = (error) => {
   };
 };
 
-export const increment = () => {
-  return {
-    type: 'INC'
-  };
-};
-
 export const onToggleIdHero = (value) => {
   return {
     type: 'ON_TOGGLE_ID_HERO',
@@ -50,14 +44,6 @@ export const onUpdateArrayAddedHeroes = (id) => {
   return {
     type: 'ON_UPDATE_ARRAY_ADDED_HEROES',
     payload: id
-  };
-};
-
-export const onAddedHeroCart = (arrHero, funcCartRemoved) => {
-  return {
-    type: 'ON_ADDED_HERO_CART',
-    payload: arrHero,
-    func: funcCartRemoved
   };
 };
 
@@ -120,13 +106,6 @@ export const getAdminPage = (userObj) => {
   return {
     type: 'GET_ADMIN_PAGE',
     user: userObj
-  };
-};
-
-export const getUserBlockPage = (userObj) => {
-  return {
-    type: 'GET_USER_BLOCK_PAGE',
-    payload: userObj
   };
 };
 
@@ -246,26 +225,12 @@ export const updateActivePlayer = () => {
   };
 };
 
-export const onChangePlayerStep = () => {
-  return {
-    type: 'ON_CHANGE_PLAYER_STEP'
-  };
-};
-
-export const onHistoryNextStep = (player, idx) => {
+export const onHistoryNextStep = (newStep) => {
   return {
     type: 'ON_HISTORY_NEXT_STEP',
-    player: player,
-    idx: idx
+    payload: newStep
   };
 };
-
-// export const onHistoryNextStep = (newArrHistory) => {
-//   return {
-//     type: 'ON_HISTORY_NEXT_STEP',
-//     payload: newArrHistory
-//   };
-// };
 
 export const updatePlayerXScore = (idx) => {
   return {

@@ -9,8 +9,7 @@ const HeroDetails = () => {
   const [ initialState, dispatch ] = useStateValue();
   const { arrTableHeroes } = initialState;
 
-    const addedCartHero = () => {
-      return arrTableHeroes.map((hero) => {
+    const cartHero = arrTableHeroes.map((hero) => {
         return (
           <tr key={Math.floor(Math.random()*100000)}>
             <td><img
@@ -23,13 +22,10 @@ const HeroDetails = () => {
             <td><button
               onClick={() => dispatch(onHeroCartRemoved(hero))}
               type="button"
-              className="btn btn-danger btn-table-deleted">delete</button></td>
+              className="btn btn-danger btn-sm">delete</button></td>
           </tr>
         );
       });
-    };
-
-    const cartHero = addedCartHero();
 
   return (
     <div className="hero-details">

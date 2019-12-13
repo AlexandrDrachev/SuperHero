@@ -3,12 +3,11 @@ import React from 'react';
 import './get-autorisation.css';
 import { onGetUserAutorisation, getWindowModal,
          getAdminPage, onToggleUserLogin, getWindowModalRegistration,
-         getUserBlockPage, changeUserAutorisationSave, onGetGamePage } from "../../actions";
+         changeUserAutorisationSave, onGetGamePage } from "../../actions";
 import { useStateValue } from "../../state";
 import { modalComponent} from "../app/app";
 import ModalLogin from "../modal-login";
 import ModalRegistration from "../modal-registration";
-import {Link} from "react-router-dom";
 
 const GetAutorisation = () => {
 

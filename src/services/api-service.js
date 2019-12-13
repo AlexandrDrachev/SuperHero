@@ -127,8 +127,13 @@ export default class ServiceApi {
         resolve(this.userSave);
       }, 700);
     });
-  }
+  };
 }
+
+
+
+
+
 
 
 

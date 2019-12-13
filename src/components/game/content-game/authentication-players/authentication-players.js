@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 
 import './authentication-players.css';
-import {useStateValue} from "../../../../state";
+import { useStateValue } from "../../../../state";
 import ServiceApi from "../../../../services";
 import { heroError, heroLoaded, heroRequested, getDataGame,
          onChangePlayerX, onReadyPlayerX, onChangePlayer0, onReadyPlayer0, onField } from "../../../../actions";
@@ -13,7 +13,7 @@ import PlayingField from "../plaing-field";
 const AuthenticationPlayers = () => {
 
   const [ initialState, dispatch ] = useStateValue();
-  const { randomId, objHero,
+  const { objHero, idHero,
     game: { loading, playerX, player0, btnPlay, btnSlide, field } } = initialState;
 
     useEffect( () => {
@@ -29,11 +29,11 @@ const AuthenticationPlayers = () => {
             dispatch(heroError(error));
         }
       };
-      fetchData(randomId);
-    }, [randomId, dispatch, field]);
+      fetchData(idHero);
+    }, [idHero, dispatch]);
 
     const onGetRandomHero = () => {
-      let randomIdHero = () => {
+      let rndIdHero = () => {
         return Math.floor(Math.random()*731);
       };
       const fetchData = async (id) => {
@@ -46,7 +46,7 @@ const AuthenticationPlayers = () => {
           dispatch(heroError(error));
         }
       };
-      fetchData(randomIdHero());
+      fetchData(rndIdHero());
     };
 
 

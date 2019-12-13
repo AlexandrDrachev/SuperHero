@@ -17,21 +17,6 @@
     margin-bottom: 5px;
 }
 
-.btn-table-deleted {
-    height: 25px;
-    font-size: 13px;
-    background: red;
-    border-radius: 15px;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    width: 100px;
-    margin: 2px;
-}
-
 .img-table {
     width: 45px;
     height: 45px;

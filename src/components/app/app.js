@@ -11,7 +11,7 @@ import Autorisation from "../administration";
 import ModalLogin from "../modal-login";
 import {
   addedUsersInState, getWindowApp, getWindowModal,
-  getWindowModalRegistration, getWindowReModal, onUserExit, getUserSaveFromData, heroRequested, heroLoaded, heroError
+  getWindowModalRegistration, getWindowReModal, onUserExit, getUserSaveFromData,
 } from '../../actions';
 import ModalRegistration from "../modal-registration";
 import GetAdministration from "../get-administartion";
@@ -71,7 +71,7 @@ export const modalComponent = (Name) => {
 };
 
 let getLocalStorage = JSON.parse(localStorage.getItem("dataStorage"));
-let userSav = JSON.parse(localStorage.getItem("userSave"));
+// let userSav = JSON.parse(localStorage.getItem("userSave"));
 
 const App = () => {
 

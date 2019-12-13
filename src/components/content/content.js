@@ -32,6 +32,23 @@ const Content = () => {
 
   }, [idHero, dispatch]);
 
+  const getRandomHero = () => {
+    let rndIdHero = () => {
+      return Math.floor(Math.random()*731);
+    };
+    const fetchData = async (id) => {
+      dispatch(heroRequested());
+      try {
+        let service = new ServiceApi();
+        const result = await service.getHero(id);
+        dispatch(heroLoaded(result));
+      } catch (error) {
+        dispatch(heroError(error));
+      }
+    };
+    fetchData(rndIdHero());
+  };
+
   if (!imgHero) {
     return <div className="img-hero"><Spinner /></div>
   }
@@ -81,7 +98,7 @@ const Content = () => {
         </div>
       </div>
       <div className="block-input-id">
-        <div className="form-group">
+        <div className="form-group form-content">
           <label htmlFor="exampleFormControlSelect1">search hero by name</label>
           <select
             onChange={(event) => newId = event.target.value}
@@ -97,6 +114,9 @@ const Content = () => {
               );
             })}
           </select>
+          <button
+            onClick={() => getRandomHero()}
+            className="btn btn-info btn-head-hero">random hero</button>
         </div>
         <input
           onChange={(event) => getEventTargetValue(+event.target.value)}

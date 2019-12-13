@@ -3,8 +3,6 @@
 // const dataStorage = JSON.stringify(usersData);
 // localStorage.setItem("dataStorage", dataStorage);
 
-import {__RouterContext} from "react-router";
-
 export const initialState =
   {
     idHero: 460,
@@ -76,7 +74,7 @@ export const initialState =
       stepCount: 0,
       stepPlayerX: false,
       historyStep: [
-        {players: [null, null, null, null, null, null, null, null, null]}
+        { players: [null, null, null, null, null, null, null, null, null] }
       ],
       winner: {
         status: false,
@@ -88,11 +86,6 @@ export const initialState =
 const reducer = (state = initialState, action) => {
   switch (action.type) {
 
-    case 'INC':
-      return {
-        ...state,
-        count: state.count + 1
-      };
     case 'FETCH_HERO_REQUEST':
       return state;
     case 'FETCH_HERO_SUCCESS':
@@ -245,7 +238,11 @@ const reducer = (state = initialState, action) => {
         autorisation: false,
         userAutorisationSave: false,
         registration: false,
-        userAutorisation: {}
+        userAutorisation: {},
+        game: {
+          ...state.game,
+          gamePageApp: false
+        }
       };
     case 'ON_REGISTRATION_NEW_USER':
       return {
@@ -374,44 +371,19 @@ const reducer = (state = initialState, action) => {
           activePlayer: state.game.stepPlayerX ? state.game.playerX : state.game.player0,
         }
       };
-    case 'ON_CHANGE_PLAYER_STEP':
+    case 'ON_HISTORY_NEXT_STEP':
       return {
         ...state,
         game: {
           ...state.game,
-          stepPlayerX: !state.game.stepPlayerX
+          stepPlayerX: !state.game.stepPlayerX,
+          stepCount: state.game.stepCount + 1,
+          historyStep: [
+            ...state.game.historyStep,
+            action.payload
+          ]
         }
       };
-    case 'ON_HISTORY_NEXT_STEP':
-      let newHistoryStep = state.game.historyStep.slice();
-      let newStep = newHistoryStep[state.game.historyStep.length - 1];
-      let playerIdx = newStep.players.findIndex((item) => item === action.idx);
-      if (playerIdx === -1) {
-        newStep.players[action.idx] = action.player;
-        console.log('newStep: ', newStep);
-        return {
-          ...state,
-          game: {
-            ...state.game,
-            stepCount: state.game.stepCount + 1,
-            historyStep: [
-              ...state.game.historyStep,
-              newStep
-            ]
-          }
-        }
-      }
-      return state;
-
-    // case 'ON_HISTORY_NEXT_STEP':
-    //   return {
-    //     ...state,
-    //     game: {
-    //       ...state.game,
-    //       historyStep: action.payload
-    //     }
-    //   };
-
     case 'UPDATE_PLAYER_X_SCORE':
       return {
         ...state,
@@ -482,7 +454,9 @@ const reducer = (state = initialState, action) => {
     case 'ON_NEW_GAME':
       return {
         ...state,
+        idHero: 460,
         game: {
+          gamePageApp: true,
           loading: true,
           btnPlay: true,
           btnSlide: true,
