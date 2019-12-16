@@ -18,17 +18,23 @@ const Content = () => {
   let newId;
 
   useEffect( () => {
+    let clear = false;
     const fetchData = async (id) => {
       dispatch(heroRequested());
       try {
         let service = new ServiceApi();
-        const result = await service.getHero(id);
+        const result = !clear && await service.getHero(id);
         dispatch(heroLoaded(result));
+        console.log('clear: ', clear);
       } catch (error) {
         dispatch(heroError(error));
+        return () => clear = true;
       }
     };
+
     fetchData(idHero);
+
+    return () => clear = true;
 
   }, [idHero, dispatch]);
 

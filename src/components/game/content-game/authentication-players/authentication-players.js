@@ -18,6 +18,8 @@ const AuthenticationPlayers = () => {
 
     useEffect( () => {
 
+      let clear = false;
+
       const fetchData = async (id) => {
         dispatch(heroRequested());
         try {
@@ -29,7 +31,10 @@ const AuthenticationPlayers = () => {
             dispatch(heroError(error));
         }
       };
-      fetchData(idHero);
+      if (!clear) {
+        fetchData(idHero);
+      }
+      return () => clear = true;
     }, [idHero, dispatch]);
 
     const onGetRandomHero = () => {
