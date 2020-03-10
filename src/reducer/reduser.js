@@ -1,8 +1,4 @@
 
-// export let usersData = [{statusAdmin: true, name: 'Admin', password: 123456, email: 'alexfront.front@gmail.com'}];
-// const dataStorage = JSON.stringify(usersData);
-// localStorage.setItem("dataStorage", dataStorage);
-
 export const initialState =
   {
     idHero: 460,

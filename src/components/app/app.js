@@ -10,8 +10,8 @@ import { useStateValue } from "../../state";
 import Autorisation from "../administration";
 import ModalLogin from "../modal-login";
 import {
-  addedUsersInState, getWindowApp, getWindowModal,
-  getWindowModalRegistration, getWindowReModal, onUserExit, getUserSaveFromData,
+  addedUsersInState, getUserSaveFromData, getWindowApp, getWindowModal,
+  getWindowModalRegistration, getWindowReModal, onUserExit,
 } from '../../actions';
 import ModalRegistration from "../modal-registration";
 import GetAdministration from "../get-administartion";
@@ -79,16 +79,23 @@ const App = () => {
   const { autorisation, window, users, userAutorisation, isAdministrator,
           registration, userLogin, userRegistration, userIsBlock, userAutorisationSave, objHero, game: { gamePageApp } } = initialState;
 
+  if (!users) {
+    let usersData = [{statusAdmin: true, name: 'Admin', password: 123456, email: 'alexfront.front@gmail.com'}];
+    const dataStorage = JSON.stringify(usersData);
+    localStorage.setItem("dataStorage", dataStorage);
+    document.location.reload();
+  }
+
   useEffect(() => {
 
     dispatch(addedUsersInState(getLocalStorage));
     const fetchData = async () => {
-      let service = new ServiceApi();
-      const result = await service.getUserSave()
-        .then((res) => res);
-      if (result.save) {
-        dispatch(getUserSaveFromData(result, result.save));
-      }
+      // let service = new ServiceApi();
+      // const result = await service.getUserSave()
+      //   .then((res) => res);
+      // if (result.save) {
+      //   dispatch(getUserSaveFromData(result, result.save));
+      // }
     };
     fetchData();
 
