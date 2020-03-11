@@ -1,6 +1,14 @@
 import React, { Fragment, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+// Firebase App (the core Firebase SDK) is always required and
+// must be listed before other Firebase SDKs
+import * as firebase from "firebase/app";
+
+// Add the Firebase services that you want to use
+import "firebase/auth";
+import "firebase/firestore";
+
 import './app.css';
 
 import Header from "../header";
@@ -19,6 +27,22 @@ import ModalReLogin from "../modal-re-login";
 import ServiceApi from "../../services";
 import Game from "../game";
 import ContentGame from "../game/content-game";
+import Footer from "../footer";
+
+// Your web app's Firebase configuration
+let firebaseConfig = {
+  apiKey: "AIzaSyAfHVeCmYtyJyVQa8SrBzqmja7FAXy2Ydk",
+  authDomain: "superhero-da781.firebaseapp.com",
+  databaseURL: "https://superhero-da781.firebaseio.com",
+  projectId: "superhero-da781",
+  storageBucket: "superhero-da781.appspot.com",
+  messagingSenderId: "635217646458",
+  appId: "1:635217646458:web:1531d2651d56f71e95fcc3",
+  measurementId: "G-C3QB0P6TV8"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+// firebase.analytics();
 
 export const isAutorisation = (userObject, dispatch, action, adminPage) => {
 
@@ -126,6 +150,7 @@ const App = () => {
   return (
     <Fragment>
       {window}
+      <Footer/>
     </Fragment>
   );
 };
